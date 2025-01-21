@@ -49,7 +49,7 @@
     <script>
         async function getAnswer() {
             const question = document.getElementById('question').value;
-            const apiKey = 'YOUR_OPENAI_API_KEY';
+            const apiKey = mysecret;
             const url = 'https://api.openai.com/v1/chat/completions';
 
             const response = await fetch(url, {
