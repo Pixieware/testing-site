@@ -1,21 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Questions For Dumb People</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Q&A</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #00ffcc;
+            text-align: center;
+            padding: 50px;
+        }
+        #chat-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            background: #333;
+            color: #00ffcc;
+        }
+        button {
+            background: #00ffcc;
+            color: #121212;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <button onclick="askQuestion()">Click Me Stupid</button>
+    <div id="chat-box">
+        <h1>Ask AI</h1>
+        <input type="text" id="question" placeholder="Type your question...">
+        <button onclick="getAnswer()">Ask</button>
+        <p id="answer"></p>
+    </div>
 
-  <script>
-    function askQuestion() {
-      let ask = prompt("What's your name?");
-      alert("Imagine being called " + ask);
-      alert("That's just sad.")
-      alert("Kill yourself")
-      window.close();
-    }
-  </script>
+    <script>
+        async function getAnswer() {
+            const question = document.getElementById('question').value;
+            const apiKey = 'YOUR_OPENAI_API_KEY';
+            const url = 'https://api.openai.com/v1/chat/completions';
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [{ role: 'user', content: question }],
+                    max_tokens: 100
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById('answer').innerText = data.choices[0].message.content;
+        }
+    </script>
 </body>
 </html>
