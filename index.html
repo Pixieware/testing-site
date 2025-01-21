@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello Button</title>
+  <title>Questions For Dumb People</title>
 </head>
 <body>
-  <button onclick="sayHello()">Click Me!</button>
+  <button onclick="askQuestion()">Click Me Stupid</button>
 
   <script>
-    function sayHello() {
-      alert("Hello");
+    function askQuestion() {
+      let ask = prompt("What's your name?");
+      alert("Imagine being called " + ask);
+      alert("That's just sad.")
+      alert("Kill yourself")
+      window.close();
     }
   </script>
 </body>
