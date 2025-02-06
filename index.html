@@ -3,70 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Q&A</title>
+    <title>Rotation Solver</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #00ffcc;
-            text-align: center;
-            padding: 50px;
-        }
-        #chat-box {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-        input {
-            background: #333;
-            color: #00ffcc;
-        }
-        button {
-            background: #00ffcc;
-            color: #121212;
-            cursor: pointer;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .point { margin: 10px; }
     </style>
 </head>
 <body>
-    <div id="chat-box">
-        <h1>Ask AI</h1>
-        <input type="text" id="question" placeholder="Type your question...">
-        <button onclick="getAnswer()">Ask</button>
-        <p id="answer"></p>
-    </div>
-
+    <h2>Rotation Solver</h2>
+    <label>Center Point (x, y): </label>
+    <input type="number" id="cx" placeholder="x"> 
+    <input type="number" id="cy" placeholder="y">
+    <br>
+    <label>Point (x, y): </label>
+    <input type="number" id="px" placeholder="x">
+    <input type="number" id="py" placeholder="y">
+    <br>
+    <button onclick="rotate(90)">90° Clockwise</button>
+    <button onclick="rotate(180)">180°</button>
+    <button onclick="rotate(270)">270° Clockwise</button>
+    <br>
+    <h3>Rotated Point: <span id="result"></span></h3>
+    
     <script>
-        async function getAnswer() {
-            const question = document.getElementById('question').value;
-            const apiKey = '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';
-            const url = 'https://api.openai.com/v1/chat/completions';
-
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    messages: [{ role: 'user', content: question }],
-                    max_tokens: 100
-                })
-            });
-
-            const data = await response.json();
-            document.getElementById('answer').innerText = data.choices[0].message.content;
+        function rotate(angle) {
+            let cx = parseFloat(document.getElementById("cx").value) || 0;
+            let cy = parseFloat(document.getElementById("cy").value) || 0;
+            let px = parseFloat(document.getElementById("px").value);
+            let py = parseFloat(document.getElementById("py").value);
+            
+            let x = px - cx;
+            let y = py - cy;
+            let rx, ry;
+            
+            if (angle === 90) {
+                rx = -y;
+                ry = x;
+            } else if (angle === 180) {
+                rx = -x;
+                ry = -y;
+            } else if (angle === 270) {
+                rx = y;
+                ry = -x;
+            }
+            
+            rx += cx;
+            ry += cy;
+            
+            document.getElementById("result").innerText = `(${rx}, ${ry})`;
         }
     </script>
 </body>
