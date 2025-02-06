@@ -23,6 +23,10 @@
     <button onclick="rotate(180)">180°</button>
     <button onclick="rotate(270)">270° Clockwise</button>
     <br>
+    <h3>Steps:</h3>
+    <p id="step1"></p>
+    <p id="step2"></p>
+    <p id="step3"></p>
     <h3>Rotated Point: <span id="result"></span></h3>
     
     <script>
@@ -34,8 +38,9 @@
             
             let x = px - cx;
             let y = py - cy;
-            let rx, ry;
+            document.getElementById("step1").innerText = `Step 1: Subtract center point → (${px} - ${cx}, ${py} - ${cy}) = (${x}, ${y})`;
             
+            let rx, ry;
             if (angle === 90) {
                 rx = -y;
                 ry = x;
@@ -47,9 +52,12 @@
                 ry = -x;
             }
             
+            document.getElementById("step2").innerText = `Step 2: Apply rotation formula → (${x}, ${y}) becomes (${rx}, ${ry})`;
+            
             rx += cx;
             ry += cy;
             
+            document.getElementById("step3").innerText = `Step 3: Add center point back → (${rx - cx} + ${cx}, ${ry - cy} + ${cy}) = (${rx}, ${ry})`;
             document.getElementById("result").innerText = `(${rx}, ${ry})`;
         }
     </script>
